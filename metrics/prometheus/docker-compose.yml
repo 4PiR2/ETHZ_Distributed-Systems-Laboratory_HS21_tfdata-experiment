@@ -1,0 +1,43 @@
+version: '2.3'
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    network_mode: "host"
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: always
+#    ports:
+#      - 9090:9090
+    volumes:
+      - ./prometheus-config:/etc/prometheus
+      - ./prometheus-data:/prometheus
+    network_mode: "host"
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+#    ports:
+#      - 3000:3000
+    volumes:
+      - ./grafana-storage:/var/lib/grafana
+    network_mode: "host"
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:latest
+#    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    container_name: dcgm-exporter
+    restart: always
+    network_mode: "host"
+    volumes:
+      - ./dcgm-config:/etc/dcgm-exporter

@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-exporter-dispatcher
+spec:
+  type: NodePort
+  selector:
+    name: node-exporter-dispatcher
+  ports:
+  - port: 9100
+    targetPort: 9100
+    protocol: TCP
+    nodePort: {{ dispatcher.port }}
+---
+{% for w in workers %}
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-exporter-worker-{{ w.index }}
+spec:
+  type: NodePort
+  selector:
+    name: node-exporter-worker-{{ w.index }}
+  ports:
+  - port: 9100
+    targetPort: 9100
+    protocol: TCP
+    nodePort: {{ w.port }}
+---
+{% endfor %}
+

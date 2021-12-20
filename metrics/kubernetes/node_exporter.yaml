@@ -1,0 +1,219 @@
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-dispatcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-dispatcher
+  template:
+    metadata:
+      labels:
+        name: node-exporter-dispatcher
+    spec:
+      nodeSelector:
+        cachew.role: dispatcher
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+
+
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-worker-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-worker-0
+  template:
+    metadata:
+      labels:
+        cachew.pod.role: worker
+        name: node-exporter-worker-0
+    spec:
+      nodeSelector:
+        cachew.role: worker
+        kubernetes.io/hostname: jialchen-nodes-2rwg
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-worker-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-worker-1
+  template:
+    metadata:
+      labels:
+        cachew.pod.role: worker
+        name: node-exporter-worker-1
+    spec:
+      nodeSelector:
+        cachew.role: worker
+        kubernetes.io/hostname: jialchen-nodes-mrnm
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-worker-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-worker-2
+  template:
+    metadata:
+      labels:
+        cachew.pod.role: worker
+        name: node-exporter-worker-2
+    spec:
+      nodeSelector:
+        cachew.role: worker
+        kubernetes.io/hostname: jialchen-nodes-qls9
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-worker-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-worker-3
+  template:
+    metadata:
+      labels:
+        cachew.pod.role: worker
+        name: node-exporter-worker-3
+    spec:
+      nodeSelector:
+        cachew.role: worker
+        kubernetes.io/hostname: jialchen-nodes-v2lw
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+

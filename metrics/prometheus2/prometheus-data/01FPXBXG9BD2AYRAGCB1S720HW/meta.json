@@ -1,0 +1,17 @@
+{
+	"ulid": "01FPXBXG9BD2AYRAGCB1S720HW",
+	"minTime": 1639504800154,
+	"maxTime": 1639512000000,
+	"stats": {
+		"numSamples": 246240,
+		"numSeries": 513,
+		"numChunks": 2052
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01FPXBXG9BD2AYRAGCB1S720HW"
+		]
+	},
+	"version": 1
+}

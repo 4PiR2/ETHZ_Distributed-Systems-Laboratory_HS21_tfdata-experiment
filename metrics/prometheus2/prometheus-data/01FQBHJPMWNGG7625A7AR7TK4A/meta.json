@@ -1,0 +1,17 @@
+{
+	"ulid": "01FQBHJPMWNGG7625A7AR7TK4A",
+	"minTime": 1639526400000,
+	"maxTime": 1639533600000,
+	"stats": {
+		"numSamples": 181617,
+		"numSeries": 513,
+		"numChunks": 1539
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01FQBHJPMWNGG7625A7AR7TK4A"
+		]
+	},
+	"version": 1
+}

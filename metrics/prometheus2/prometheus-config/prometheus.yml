@@ -1,0 +1,42 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          instance: 'prometheus'
+ 
+  - job_name: node-exporter-dispatcher
+    static_configs:
+      - targets: ['jialchen-cachew-dispatcher-wnpw:32000']
+        labels:
+          instance: 'dispatcher'
+
+
+  - job_name: node-exporter-worker-0
+    static_configs:
+      - targets: ['jialchen-nodes-2rwg:32001']
+        labels:
+          instance: 'worker-0'
+
+  - job_name: node-exporter-worker-1
+    static_configs:
+      - targets: ['jialchen-nodes-mrnm:32002']
+        labels:
+          instance: 'worker-1'
+
+  - job_name: node-exporter-worker-2
+    static_configs:
+      - targets: ['jialchen-nodes-qls9:32003']
+        labels:
+          instance: 'worker-2'
+
+  - job_name: node-exporter-worker-3
+    static_configs:
+      - targets: ['jialchen-nodes-v2lw:32004']
+        labels:
+          instance: 'worker-3'
+

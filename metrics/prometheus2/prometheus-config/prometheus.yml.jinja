@@ -1,0 +1,25 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          instance: 'prometheus'
+ 
+  - job_name: node-exporter-dispatcher
+    static_configs:
+      - targets: ['{{ dispatcher.ip }}:{{ dispatcher.port }}']
+        labels:
+          instance: 'dispatcher'
+
+{% for w in workers %}
+  - job_name: node-exporter-worker-{{ w.index }}
+    static_configs:
+      - targets: ['{{ w.ip }}:{{ w.port }}']
+        labels:
+          instance: 'worker-{{ w.index }}'
+{% endfor %}
+

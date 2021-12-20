@@ -1,0 +1,88 @@
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: node-exporter-dispatcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: node-exporter-dispatcher
+  template:
+    metadata:
+      labels:
+        name: node-exporter-dispatcher
+    spec:
+      nodeSelector:
+        cachew.role: dispatcher
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+
+{% for w in workers %}
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+  name: {{ w.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ w.name }}
+  template:
+    metadata:
+      labels:
+        cachew.pod.role: worker
+        name: {{ w.name }}
+    spec:
+      nodeSelector:
+        cachew.role: worker
+        kubernetes.io/hostname: {{ w.ip }}
+      containers:
+      - name: node-exporter
+        image: prom/node-exporter:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9100
+        volumeMounts:
+        - mountPath: /host/proc:ro
+          name: proc
+        - mountPath: /host/sys:ro
+          name: sys
+        - mountPath: /rootfs:ro
+          name: rootfs
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: rootfs
+        hostPath:
+          path: /
+      hostNetwork: true
+---
+{% endfor %}
+
